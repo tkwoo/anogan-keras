@@ -1,13 +1,7 @@
-# AnoGAN keras implementation
-
-Unsupervised anomaly detection with DCGAN
-
-## Result
-
-
 <center><img src="./image/overview.png" width=100%></center>
-
+<br>
 <center><img src="./image/tsne.png" width=100%></center>
+<br>
 
 -----
 
@@ -22,6 +16,11 @@ Unsupervised anomaly detection with DCGAN
 
 
 -----
+<br><br>
+
+# AnoGAN keras implementation
+
+Unsupervised anomaly detection with DCGAN
 
 ## Requirements
 
@@ -66,6 +65,7 @@ Then, the training steps(image) will be saved 'result' directory
 
 
 ### Reference
-paper : https://arxiv.org/abs/1703.05921
-AnoGAN(code, keras) : https://github.com/yjucho1/anoGAN
-AnoGAN(code, tf) : https://github.com/LeeDoYup/AnoGAN
+
+paper : https://arxiv.org/abs/1703.05921 <br>
+AnoGAN(code, keras) : https://github.com/yjucho1/anoGAN <br>
+AnoGAN(code, tf) : https://github.com/LeeDoYup/AnoGAN <br>
