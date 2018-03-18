@@ -5,13 +5,20 @@ Unsupervised anomaly detection with DCGAN
 ## Result
 
 
-<center><img src="./image/overview.png" width=50% height=50%></center>
+<center><img src="./image/overview.png" width=70%></center>
 
-<center><img src="./image/tsne.png" width=50% height=50%></center>
+<center><img src="./image/tsne.png" width=70%></center>
+
+-----
 
 | query image | generated similar image | differece |
 |:---:|:---:|:---:|
-| <img src="./result_latent_10/result_query_7.png" width=50%> | <img src="./result_latent_10/result_pred_7.png" width=50%> | <img src="./result_latent_10/result_diff_7.png" width=200%> |
+| <img src="./result_latent_10/result_query_0.png" width=100%> | <img src="./result_latent_10/result_pred_0.png" width=100%> | <img src="./result_latent_10/result_diff_0.png" width=100%> |
+| <img src="./result_latent_10/result_query_1.png" width=100%> | <img src="./result_latent_10/result_pred_1.png" width=100%> | <img src="./result_latent_10/result_diff_1.png" width=100%> |
+| <img src="./result_latent_10/result_query_2.png" width=100%> | <img src="./result_latent_10/result_pred_2.png" width=100%> | <img src="./result_latent_10/result_diff_2.png" width=100%> |
+| <img src="./result_latent_10/result_query_4.png" width=100%> | <img src="./result_latent_10/result_pred_4.png" width=100%> | <img src="./result_latent_10/result_diff_4.png" width=100%> |
+| <img src="./result_latent_10/result_query_7.png" width=100%> | <img src="./result_latent_10/result_pred_7.png" width=100%> | <img src="./result_latent_10/result_diff_7.png" width=100%> |
+| <img src="./result_latent_10/result_query_9.png" width=100%> | <img src="./result_latent_10/result_pred_9.png" width=100%> | <img src="./result_latent_10/result_diff_9.png" width=100%> |
 
 
 -----
