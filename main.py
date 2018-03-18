@@ -16,6 +16,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 parser = argparse.ArgumentParser()
 parser.add_argument('--img_idx', type=int, default=14)
 parser.add_argument('--label_idx', type=int, default=7)
+parser.add_argument('--mode', type=str, default='test', help='train, test')
 args = parser.parse_args()
 
 ### 0. prepare data
@@ -28,12 +29,13 @@ X_test = X_test[:,:,:,None]
 
 X_test_original = X_test.copy()
 
-X_train = X_train[(y_train==1)]
+X_train = X_train[y_train==1]
+X_test = X_test[y_test==1]
 print ('train shape:', X_train.shape)
 
 ### 1. train generator & discriminator
-# Model_d, Model_g = anogan.train(64, X_train)
-# exit()
+if args.mode == 'train':
+    Model_d, Model_g = anogan.train(64, X_train)
 
 ### 2. test generator
 generated_img = anogan.generate(25)
@@ -94,94 +96,55 @@ start = cv2.getTickCount()
 score, qurey, pred, diff = anomaly_detection(test_img)
 time = (cv2.getTickCount() - start) / cv2.getTickFrequency() * 1000
 print ('%d label, %d : done'%(label_idx, img_idx), '%.2f'%score, '%.2fms'%time)
-# cv2.imwrite('./anomaly_result/query_%d_%03d.png'%(label_idx, img_idx), qurey)
-# cv2.imwrite('./anomaly_result/pred_%d_%03d.png'%(label_idx, img_idx), pred)
-# cv2.imwrite('./anomaly_result/diff_%d_%03d.png'%(label_idx, img_idx), diff)
-# cv2.imwrite('./combined_result/qurey_rn.png', qurey)
-# cv2.imwrite('./combined_result/pred_rn.png', pred)
-# cv2.imwrite('./combined_result/diff_rn.png', diff)
+# cv2.imwrite('./qurey.png', qurey)
+# cv2.imwrite('./pred.png', pred)
+# cv2.imwrite('./diff.png', diff)
 
-### matplot view
-plt.figure(1, figsize=(2, 2))
+## matplot view
+plt.figure(1, figsize=(3, 3))
 plt.title('query image')
 plt.imshow(qurey.reshape(28,28), cmap=plt.cm.gray)
-plt.show()
+
 print("anomaly score : ", score)
-plt.figure(2, figsize=(2, 2))
+plt.figure(2, figsize=(3, 3))
 plt.title('generated similar image')
 plt.imshow(pred.reshape(28,28), cmap=plt.cm.gray)
 
-plt.figure(3, figsize=(2, 2))
+plt.figure(3, figsize=(3, 3))
 plt.title('anomaly detection')
 plt.imshow(cv2.cvtColor(diff,cv2.COLOR_BGR2RGB))
 plt.show()
 
-exit()
-
-### multi image
-
-# num_imgs = 100
-# for label_idx in range(10):
-#     label = label_idx
-#     list_test_img = X_test_original[y_test==label][0:num_imgs]
-#     list_score = []
-#     list_qurey = []
-#     list_pred = []
-#     list_diff = []
-
-#     for idx, test_img in enumerate(list_test_img):
-#         start = cv2.getTickCount()
-#         score,qurey,pred,diff = anomaly_detection(test_img, g, d)
-#         list_qurey.append(qurey)
-#         list_pred.append(pred)
-#         list_diff.append(diff)
-#         list_score.append(score)
-#         time = (cv2.getTickCount() - start) / cv2.getTickFrequency() * 1000
-#         print ('%d label, %d : done'%(label, idx), '%.2fms'%time)
-
-#     np_qurey = np.array(list_qurey)
-#     np_pred = np.array(list_pred)
-#     np_diff = np.array(list_diff)
-
-#     combined_qurey = anogan.combine_images(np_qurey)
-#     combined_pred = anogan.combine_images(np_pred)
-#     combined_diff = anogan.combine_images(np_diff)
-
-#     print ('qurey shape:', combined_qurey.shape)
-#     print ('pred  shape:', combined_pred.shape)
-#     print ('diff  shape:', combined_diff.shape)
-
-#     cv2.imwrite('./anomaly_result/qurey_%d.png'%label, combined_qurey)
-#     cv2.imwrite('./anomaly_result/pred_%d.png'%label, combined_pred)
-#     cv2.imwrite('./anomaly_result/diff_%d.png'%label, combined_diff)
 
 ### 4. tsne feature view
 
 ### t-SNE embedding 
 ### generating anomaly image for test (radom noise image)
 
-# from sklearn.manifold import TSNE
-# random_image = np.random.uniform(0,1, (100, 28,28, 1))
-# print("a sample from generated anomaly images(random noise image)")
-# plt.figure(figsize=(2, 2))
-# plt.imshow(random_image[0].reshape(28,28), cmap=plt.cm.gray)
-# plt.show()
+from sklearn.manifold import TSNE
 
-# # intermidieate output of discriminator
-# model = anogan.feature_extractor()
-# feature_map_of_random = model.predict(random_image, verbose=1)
-# feature_map_of_minist = model.predict(X_test_original[y_test != 1][:300], verbose=1)
-# feature_map_of_minist_1 = model.predict(X_test[:100], verbose=1)
+random_image = np.random.uniform(0, 1, (100, 28, 28, 1))
+print("random noise image")
+plt.figure(4, figsize=(2, 2))
+plt.title('random noise image')
+plt.imshow(random_image[0].reshape(28,28), cmap=plt.cm.gray)
 
-# # t-SNE for visulization
-# output = np.concatenate((feature_map_of_random, feature_map_of_minist, feature_map_of_minist_1))
-# output = output.reshape(output.shape[0], -1)
-# anomaly_flag = np.array([1]*100+ [0]*300)
+# intermidieate output of discriminator
+model = anogan.feature_extractor()
+feature_map_of_random = model.predict(random_image, verbose=1)
+feature_map_of_minist = model.predict(X_test_original[y_test != 1][:300], verbose=1)
+feature_map_of_minist_1 = model.predict(X_test[:100], verbose=1)
 
-# X_embedded = TSNE(n_components=2).fit_transform(output)
-# plt.title("t-SNE embedding on the feature representation")
-# plt.scatter(X_embedded[:100,0], X_embedded[:100,1], label='random noise(anomaly)')
-# plt.scatter(X_embedded[100:400,0], X_embedded[100:400,1], label='mnist(anomaly)')
-# plt.scatter(X_embedded[400:,0], X_embedded[400:,1], label='mnist(normal)')
-# plt.legend()
-# plt.show()
+# t-SNE for visulization
+output = np.concatenate((feature_map_of_random, feature_map_of_minist, feature_map_of_minist_1))
+output = output.reshape(output.shape[0], -1)
+anomaly_flag = np.array([1]*100+ [0]*300)
+
+X_embedded = TSNE(n_components=2).fit_transform(output)
+plt.figure(5)
+plt.title("t-SNE embedding on the feature representation")
+plt.scatter(X_embedded[:100,0], X_embedded[:100,1], label='random noise(anomaly)')
+plt.scatter(X_embedded[100:400,0], X_embedded[100:400,1], label='mnist(anomaly)')
+plt.scatter(X_embedded[400:,0], X_embedded[400:,1], label='mnist(normal)')
+plt.legend()
+plt.show()
