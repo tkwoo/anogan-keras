@@ -9,7 +9,10 @@ Unsupervised anomaly detection with DCGAN
 
 <center><img src="./image/tsne.png" width=50% height=50%></center>
 
-| ![query](./result_latent_10/result_query_7.png) | ![similar](./result_latent_10/result_pred_7.png) | ![diff](./result_latent_10/result_diff_7.png) |
+| query image | generated similar image | differece |
+|:---:|:---:|:---:|
+| <img src="./result_latent_10/result_query_7.png" width=50%> | <img src="./result_latent_10/result_pred_7.png" width=50%> | <img src="./result_latent_10/result_diff_7.png" width=200%> |
+
 
 -----
 
