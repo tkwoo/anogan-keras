@@ -5,9 +5,9 @@ Unsupervised anomaly detection with DCGAN
 ## Result
 
 
-<center><img src="./image/overview.png" width=70%></center>
+<center><img src="./image/overview.png" width=100%></center>
 
-<center><img src="./image/tsne.png" width=70%></center>
+<center><img src="./image/tsne.png" width=100%></center>
 
 -----
 
