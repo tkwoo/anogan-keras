@@ -1,4 +1,9 @@
+
 <center><img src="./image/overview.png" width=100%></center>
+<br>
+<center><img src="./image/problem.png" width=100%></center>
+<br>
+<center><img src="./image/loss.png" width=100%></center>
 <br>
 <center><img src="./image/tsne.png" width=100%></center>
 <br>
